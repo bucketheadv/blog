@@ -12,12 +12,12 @@ Ruby是一门动态语言，动态创建与调用方法是其中一个体现。
 #### 示例代码1
 ```ruby
 class Student
-   attr_accessor :name, :age, :birthday
-   def initialize(args = {})
-     name = args[:name]
-     age    = args[:age]
-     birthday = args[:birthday]
-   end
+  attr_accessor :name, :age, :birthday
+  def initialize(args = {})
+    name = args[:name]
+    age    = args[:age]
+    birthday = args[:birthday]
+  end
 end
 ```
 `【示例代码1】`中`initialize`方法中，给三个字段赋值的方式就是一种典型的硬编码方式，假如这三个字段的名称有改动，抑或添加、去掉字段的时候，不得不同时修改这个方法。为了避免这种情况，这里可以考虑使用动态调用的方式来重构它。
@@ -28,8 +28,8 @@ class Student
   attr_accessor :name, :age, :birthday
   def initialize(args = {})
     args.each do |key, value|
-       method_name = "#{key}="
-       self.send("#{key}=", value) if self.respond_to?(method_name)
+      method_name = "#{key}="
+      self.send("#{key}=", value) if self.respond_to?(method_name)
     end
   end
 end
@@ -44,26 +44,26 @@ end
 #### 示例代码3
 ```ruby
 module Kernel
-   def attr_access(*args)
-      args.each do |arg|
-         define_method(arg) do
-            instance_variable_get("@#{arg}")
-         end
-         define_method("#{arg}=") do |value|
-            instance_variable_set("@{arg}=", value)
-         end
+  def attr_access(*args)
+    args.each do |arg|
+      define_method(arg) do
+        instance_variable_get("@#{arg}")
       end
-   end
+      define_method("#{arg}=") do |value|
+        instance_variable_set("@{arg}=", value)
+      end
+    end
+  end
 
   def cattr_access(*args)
-     args.each do |arg|
-        define_singleton_method(arg) do
-           self.class_variable_get("@@#{arg}")
-        end
-        define_singleton_method("#{arg}=") do |value|
-           self.class_variable_set("@@#{arg}", value)
-        end
-     end
+    args.each do |arg|
+      define_singleton_method(arg) do
+        self.class_variable_get("@@#{arg}")
+      end
+      define_singleton_method("#{arg}=") do |value|
+        self.class_variable_set("@@#{arg}", value)
+      end
+    end
   end
 end
 
@@ -87,24 +87,24 @@ p A.a  # 输出1
 ```ruby
 class XmlGen
   def method_missing(name, *args, &block)
-     if %W(html head title body).include?(name.to_s)
-        define_singleton_method(name) do |arg = nil, &blk|
-           str  = "<#{name}>"
-           str += arg if arg
-           str += blk.call if blk
-           str += "</#{name}>"
-           str
-        end
-        self.send(name, *args, &block)
-     end
+    if %W(html head title body).include?(name.to_s)
+      define_singleton_method(name) do |arg = nil, &blk|
+        str  = "<#{name}>"
+        str += arg if arg
+        str += blk.call if blk
+        str += "</#{name}>"
+        str
+      end
+      self.send(name, *args, &block)
+    end
   end
 end
 
 xml = XmlGen.new
 str = xml.html do
-   xml.head do
-      xml.title "Test"
-   end
+  xml.head do
+    xml.title "Test"
+  end
 end
 p str  # 输出<html><head><title>Test</title></head></html>
 ```
@@ -119,18 +119,18 @@ p str  # 输出<html><head><title>Test</title></head></html>
 #### 示例代码5
 ```ruby
 class UserProfile
-    def initialize(name)
-       @name = name
-    end
-    def hello
-       "#{@name} says hello."
-    end
+  def initialize(name)
+    @name = name
+  end
+  def hello
+    "#{@name} says hello."
+  end
 end
 
 class User < DelegateClass(UserProfile)
-   def initialize(user_profile)
-      super(user_profile)
-   end
+  def initialize(user_profile)
+    super(user_profile)
+  end
 end
 user_profile = UserProfile.new("Rapheal")
 user = User.new(user_profile)

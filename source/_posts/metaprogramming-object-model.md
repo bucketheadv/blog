@@ -6,7 +6,7 @@ tags: ["Ruby", "元编程"]
 作为一个Ruby开发者，让人又爱又恨的便是元编程了。
 
 ### 【前言】元编程是什么
-  简单地说，元编程就是对语言本身的进行操作的一种编程手段，最常见的就是`代码生成代码`。对于Ruby这门语言而言，不会元编程，等于不会这门语言，因为这是它的核心能力与魅力。本文是基于阅读《Ruby元编程》后记录的一些自己的理解和看法。
+简单地说，元编程就是对语言本身的进行操作的一种编程手段，最常见的就是`代码生成代码`。对于Ruby这门语言而言，不会元编程，等于不会这门语言，因为这是它的核心能力与魅力。本文是基于阅读《Ruby元编程》后记录的一些自己的理解和看法。
 
 ### 元编程示例
 
@@ -17,7 +17,7 @@ module Kernel
   def attr_access(*args)
     args.each do |arg|
       define_method(arg) do
-         instance_variable_get("@#{arg}")
+        instance_variable_get("@#{arg}")
       end
       define_method("#{arg}=") do |val|
         instance_variable_set("@#{arg}", val)
@@ -90,16 +90,16 @@ p str.to_s # 这里输出的就是"Nothing"了
 
 ```ruby
 class A
-   def print_self
-      self.t_pri
-   end
-   def print_self_2
-      t_pri
-   end
-   private
-      def t_pri
-        p "hello world"
-      end
+  def print_self
+    self.t_pri
+  end
+  def print_self_2
+    t_pri
+  end
+  private
+  def t_pri
+    p "hello world"
+  end
 end
 
 obj1 = A.new
