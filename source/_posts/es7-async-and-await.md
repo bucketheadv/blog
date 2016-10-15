@@ -6,6 +6,8 @@ tags: ["node", "es7"]
 
 Node.js es7标准中加入了async/await用于处理异步函数。 `async`标记的函数中方能调用`await`, `await`用于等待异步函数的返回值, 而`await`目标必须是一个`promise`对象, 因此实际上`await`就是对`promise`对象取它的`resolve`值。
 
+<!--more-->
+
 ### 使用babel-node运行es7代码
 
 ```bash

@@ -3,9 +3,10 @@ title: 浅淡Ruby的文件加载与继承
 date: 2016-08-29
 tags: ["Ruby", "文件加载"]
 ---
-## 文件加载
 
 Ruby中load一个文件有四种方式，`require`、`require_relative`、`load`、`autoload`。
+
+<!--more-->
 
 ### require和require_relative
 
