@@ -69,4 +69,6 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: github
+  repository: https://github.com/sven199109/sven199109.github.io.git
+  branch: master
