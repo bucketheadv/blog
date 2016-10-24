@@ -216,7 +216,7 @@ class MainWindow extends React.Component {
     injectTapEventPlugin()
 
     this.state = {
-      userName: '',
+      username: '',
       password: ''
     }
   }
@@ -229,8 +229,8 @@ class MainWindow extends React.Component {
 
           <TextField
             hintText="请输入用户名"
-            value={this.state.userName}
-            onChange={(event) => {this.setState({userName: event.target.value})}}
+            value={this.state.username}
+            onChange={(event) => {this.setState({username: event.target.value})}}
           />
 
           <TextField
@@ -264,7 +264,7 @@ class MainWindow extends React.Component {
       type: 'info',
       buttons: ['确定'],
       title: '登录',
-      message: this.state.userName,
+      message: this.state.username,
       defaultId: 0,
       cancelId: 0
     }
