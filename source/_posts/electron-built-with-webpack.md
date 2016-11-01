@@ -46,7 +46,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var config = {
   // key是生成文件的路径, value是源文件路径
   entry: {
-    'components/index': './src/components/index.jsx',
+    'js/bundle': './src/components/index.jsx',
     'main': './src/main.jsx'
   },
 
@@ -87,8 +87,8 @@ var config = {
 
   resolve: [
     {
-      root: __dirname + "/dist",
-      extesions: ['.css', '.scss']
+      root: path.resolve(__dirname, "src"),
+      extensions: ['', '.js', '.jsx', '.css', '.scss']
     }
   ],
 
@@ -96,7 +96,7 @@ var config = {
     new HtmlWebpackPlugin({
       filename: 'html/index.html',
       inject: false, //不添加entry列表里的文件到index.html
-      template: __dirname + "/src/html/index.html" //new 一个这个插件的实例，并传入相关的参数
+      template: path.join(__dirname, "/src/html/index.html") //new 一个这个插件的实例，并传入相关的参数
     })
   ]
 }
@@ -132,13 +132,6 @@ webpack打包后的文件放在dist文件夹下，因此程序入口调用的文
 }
 ```
 
-## 主要程序文件
-
-### index.js
-
-```js
-require('./dist/main');
-```
 
 入口文件，用于调用webpack打包后的文件。
 
@@ -307,7 +300,7 @@ const styles = {
   }
 }
 
-let mainWndComponent = ReactDOM.render(
+ReactDOM.render(
   <MainWindow />,
   document.getElementById('app')
 )
@@ -326,12 +319,12 @@ let mainWndComponent = ReactDOM.render(
   </head>
   <body>
     <div id="app"></div>
-    <script type="text/javascript" src="../components/index.js"></script>
+    <script type="text/javascript" src="../js/bundle.js"></script>
   </body>
 </html>
 ```
 
-html代码中调用`../components/index.js`来渲染当前页面，它通过调用`ReactDOM.render`渲染已经定义的组件。
+html代码中调用`../js/bundle.js`来渲染当前页面，它通过调用`ReactDOM.render`渲染已经定义的组件。
 
 ## 运行
 
