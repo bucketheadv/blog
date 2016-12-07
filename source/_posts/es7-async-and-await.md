@@ -29,13 +29,29 @@ npm install babel-preset-es2015 babel-preset-stage-2 --save-dev
 
 此时就可以使用`babel-node app.js`运行es7代码了。
 
+### 另一种方式
+
+```
+npm install babel-core babel-polyfill --save
+```
+
+在程序入口文件 `index.js`中:
+
+```js
+require('babel-core/register')
+require('babel-polyfill')
+require('./app')
+```
+
+这样一来也可以在`app.js`或其他文件中编写es7代码了。
+
 ### 传统的Promise生成
 
 #### 【示例代码1】
 ```js
 function readWithPromise(filePath) {
   return new Promise((resolve, reject) => {
-    fs.readFile(filePath, (err, data) {
+    fs.readFile(filePath, (err, data) => {
       if (err) {
         reject(err);
       } else {
@@ -50,7 +66,7 @@ function readWithPromise(filePath) {
 
 #### 【示例代码2】
 ```js
-function run() {
+async function run() {
   let data;
   try {
     data = await readWithPromise("./package.json");
