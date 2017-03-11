@@ -103,4 +103,4 @@ function readWithGenerator(filePath) {
 
 ### 小结
 
-`await` 仅仅只是`es7`加入的默认对`promise`的一种处理机制而已，它的作用其实类似于`generator`里面的`yield`。`yield`后面加的是一个`generator`函数，而`await`后面接的是一个`promise`对象，但它们都会在此等待结果返回后才会执行之后的代码。
+`await` 仅仅只是`es7`加入的默认对`promise`的一种处理机制而已，它的作用其实类似于`generator`里面的`yield`。`yield`后面加的可以是一个`generator`函数，也可以是`promise`对象，甚至可以是一个`promise`数组等;而`await`后面接的只能是一个`promise`对象，但它们都会在此等待结果返回后才会执行之后的代码。
