@@ -87,30 +87,47 @@ p A.a  # 输出1
 
 #### 示例代码4
 ```ruby
-class XmlGen
+module XML
   def method_missing(name, *args, &block)
-    if %W(html head title body).include?(name.to_s)
-      define_singleton_method(name) do |arg = nil, &blk|
-        str  = "<#{name}>"
-        str += arg if arg
-        str += blk.call if blk
-        str += "</#{name}>"
-        str
+    if %W(html head title body div).include?(name.to_s)
+      define_singleton_method(name) do |*as, &bl|
+        @_str ||= ''
+        @_str += "<#{name}"
+        as = as[0]
+        as.each do |k, v|
+          @_str += " #{k}=\"#{v}\""
+        end if as
+        @_str += '>'
+        if bl
+          _str = @_str
+          @_str = ''
+          _str += bl.call || ''
+          @_str = _str
+        end
+        @_str += "</#{name}>"
       end
       self.send(name, *args, &block)
     end
   end
 end
 
-xml = XmlGen.new
-str = xml.html do
-  xml.head do
-    xml.title "Test"
-  end
-end
-p str  # 输出<html><head><title>Test</title></head></html>
+include XML
+
+xml = \
+html(doctype: 'app') {
+  head {
+    title { 'this is title' }
+  }
+  body(onload: 'javacript:void(0)') {
+    div(class: 'v1') { 'div1' }
+    div(class: 'v2') { 'div2' }
+  }
+}
+
+p xml  
+# 输出"<html doctype=\"app\"><head><title>this is title</title></head><body onload=\"javacript:void(0)\"><div class=\"v1\">div1</div><div class=\"v2\">div2</div></body></html>"
 ```
-由于在`method_missing`中对调用方法的名字做了限制，必须是`html`、`head`、`title`、`body`其中之一才会生成代码，因此无需担心其它额外正常调用不存在方法的时候不能正常拋出`NoMethodError`异常的情况。由于在调用不存在的方法时就会调用`method_missing`这个方法，因此如果要重写这个方法一定要格外小心，`能力越大，责任越大`。
+由于在`method_missing`中对调用方法的名字做了限制，必须是`html`、`head`、`title`、`body`、`div`其中之一才会生成代码，因此无需担心其它额外正常调用不存在方法的时候不能正常拋出`NoMethodError`异常的情况。由于在调用不存在的方法时就会调用`method_missing`这个方法，因此如果要重写这个方法一定要格外小心，`能力越大，责任越大`。
 
 #### 幽灵方法与普通动态方法的优劣
 普通动态方法是指，在类初始化时便使用`define_method`等手段将需要的所有方法定义好。幽灵方法本质是在调用时，如果发现不存在方法时，那么即时定义这个方法并产生一次调用，从示例可以看出幽灵方法在定义方法时也是调用的`define_method`等行为来定义动态方法。与普通定义动态方法的区别是，如果一个对象永远没有调用一个方法，那么这个方法永远不会被定义，只有调用过一次时它才会被定义，因此使用幽灵方法时，对象所占用的内存空间比普通动态方法要少，反之付出的代价是第一次在祖先链中查找该方法的时间变长。`这可以认为是一种以时间换取空间的策略。`
