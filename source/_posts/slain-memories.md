@@ -1,5 +1,5 @@
 ---
-title: Slain Memories扒谱
+title: 扒谱第三弹《Slain Memories》
 date: 2020-03-08
 tags: ["Slain Memories", "扒谱"]
 ---
