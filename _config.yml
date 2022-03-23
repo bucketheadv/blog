@@ -70,5 +70,5 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: git@github.com:bucket-sven/bucket-sven.github.io.git
+  repository: git@github.com:bucketheadv/bucketheadv.github.io.git
   branch: master

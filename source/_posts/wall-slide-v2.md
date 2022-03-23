@@ -8,4 +8,4 @@ tags: ["Wall slide", "扒谱"]
 
 <!--more-->
 
-{% aplayer "Wall slide" "buckethead" "https://bucket-sven.github.io/2017/05/25/wall-slide/Wall-slide(beta).mp3" "http://p4.music.126.net/_qYcIE9FIsjBgXP_LoXH8w==/3298534887074621.jpg" "autoplay" %}
+{% aplayer "Wall slide" "buckethead" "/2017/05/25/wall-slide/Wall-slide(beta).mp3" "http://p4.music.126.net/_qYcIE9FIsjBgXP_LoXH8w==/3298534887074621.jpg" "autoplay" %}
